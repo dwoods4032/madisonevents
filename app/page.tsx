@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-export default function MadisonEventDashboard() {
+export default function Home() {
   const today = new Date().toISOString().slice(0, 10);
   const [selectedDate, setSelectedDate] = useState(today);
   const [filters, setFilters] = useState({
@@ -72,7 +72,9 @@ export default function MadisonEventDashboard() {
 
   const filteredEvents = events.filter(event => {
     const dateMatch = event.date === selectedDate;
-    const matchesFilters = Object.entries(filters).every(([key, value]) => !value || (event[key] && event[key].toLowerCase().includes(value.toLowerCase())));
+    const matchesFilters = Object.entries(filters).every(
+      ([key, value]) => !value || (event[key] && event[key].toLowerCase().includes(value.toLowerCase()))
+    );
     return dateMatch && matchesFilters;
   });
 
