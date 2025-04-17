@@ -1,22 +1,21 @@
-import { NextResponse } from "next/server";
+// app/api/isthmus/route.ts
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const rssUrl = "https://isthmus.com/search/event/calendar/rss/?sort=start_time%20asc&location=madison";
+    const rssUrl = "https://isthmus.com/api/contentlist/local-events/atom/?no-cache=1";
     const res = await fetch(rssUrl);
-
     if (!res.ok) {
-      return new NextResponse("Failed to fetch RSS feed", { status: 502 });
+      return new Response("Failed to fetch RSS feed", { status: 500 });
     }
 
     const xml = await res.text();
-    return new NextResponse(xml, {
-      status: 200,
+    return new Response(xml, {
       headers: {
-        "Content-Type": "application/rss+xml"
-      }
+        "Content-Type": "application/xml",
+      },
     });
   } catch (err) {
-    return new NextResponse("Error fetching RSS feed", { status: 500 });
+    return new Response("Internal Server Error", { status: 500 });
   }
 }
