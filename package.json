@@ -12,5 +12,10 @@
     "react": "latest",
     "react-dom": "latest",
     "react-calendar": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/react": "^18.2.24",
+    "@types/node": "^20.11.19"
   }
 }
