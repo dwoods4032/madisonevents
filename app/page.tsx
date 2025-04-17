@@ -38,7 +38,7 @@ export default function MadisonEventDashboard() {
           );
           if (match) {
             const parsed = new Date(match[0]);
-            if (!isNaN(parsed)) {
+            if (!isNaN(parsed.getTime())) {
               eventDate = parsed;
             }
           }
