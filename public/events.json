@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Madison Jazz Orchestra",
+    "link": "https://example.com/jazz",
+    "date": "2025-04-17",
+    "time": "19:00",
+    "type": "Music",
+    "venue": "Cafe Coda",
+    "genre": "Jazz",
+    "price": "$15",
+    "neighborhood": "Downtown"
+  },
+  {
+    "id": 2,
+    "title": "Blues Jam with The Usual Suspects",
+    "link": "https://example.com/blues",
+    "date": "2025-04-18",
+    "time": "19:30",
+    "type": "Music",
+    "venue": "Red Rooster",
+    "genre": "Blues",
+    "price": "$5",
+    "neighborhood": "East Side"
+  }
+]
