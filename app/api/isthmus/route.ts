@@ -4,7 +4,7 @@ export async function GET() {
   try {
     const response = await fetch("https://isthmus.com/search/event/calendar/?d=range&format=rss", {
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; MadisonEventsBot/1.0; +https://madisonevents.vercel.app)"
+        "User-Agent": "Mozilla/5.0 (compatible; MadisonEventsBot/1.0)"
       },
       cache: "no-store"
     });
