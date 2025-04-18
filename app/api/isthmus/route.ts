@@ -2,17 +2,23 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const res = await fetch("https://isthmus.com/api/rss/events", {
-    headers: {
-      "Content-Type": "application/xml"
+  try {
+    const rssUrl = "https://isthmus.com/api/rss/all-events/";
+    const res = await fetch(rssUrl);
+    if (!res.ok) {
+      throw new Error("Failed to fetch RSS feed from Isthmus");
     }
-  });
 
-  const data = await res.text();
-  return new NextResponse(data, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/xml"
-    }
-  });
+    const xml = await res.text();
+
+    return new NextResponse(xml, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/rss+xml"
+      }
+    });
+  } catch (error) {
+    console.error("API route error:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
 }
