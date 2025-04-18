@@ -25,7 +25,7 @@ export default function MadisonEventDashboard() {
   const selectedIso = selectedDate.toISOString().slice(0, 10);
   const filteredEvents = events.filter(event => event.date === selectedIso);
 
-  const generateGoogleMapsLink = (venue) => {
+  const generateGoogleMapsLink = (venue: string) => {
     const query = encodeURIComponent(`${venue}, Madison WI`);
     return `https://www.google.com/maps/search/?api=1&query=${query}`;
   };
@@ -36,7 +36,13 @@ export default function MadisonEventDashboard() {
 
       <div style={{ marginBottom: "20px" }}>
         <Calendar
-          onChange={setSelectedDate}
+          onChange={(value: Date | Date[]) => {
+            if (value instanceof Date) {
+              setSelectedDate(value);
+            } else if (Array.isArray(value)) {
+              setSelectedDate(value[0]);
+            }
+          }}
           value={selectedDate}
         />
       </div>
