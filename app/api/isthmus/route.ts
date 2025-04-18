@@ -1,24 +1,28 @@
 // app/api/isthmus/route.ts
-import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const rssUrl = "https://isthmus.com/api/rss/all-events/";
-    const res = await fetch(rssUrl);
-    if (!res.ok) {
-      throw new Error("Failed to fetch RSS feed from Isthmus");
+    const response = await fetch("https://isthmus.com/search/event/calendar/?d=range&format=rss", {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (compatible; MadisonEventsBot/1.0; +https://madisonevents.vercel.app)"
+      },
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      return new Response("Failed to fetch external RSS feed.", { status: 502 });
     }
 
-    const xml = await res.text();
+    const xml = await response.text();
 
-    return new NextResponse(xml, {
+    return new Response(xml, {
       status: 200,
       headers: {
         "Content-Type": "application/rss+xml"
       }
     });
   } catch (error) {
-    console.error("API route error:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    console.error("Error fetching RSS:", error);
+    return new Response("Internal Server Error", { status: 500 });
   }
 }
