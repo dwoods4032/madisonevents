@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-export default function Home() {
+export default function MadisonEventDashboard() {
   const today = new Date().toISOString().slice(0, 10);
   const [selectedDate, setSelectedDate] = useState(today);
   const [filters, setFilters] = useState({
@@ -71,14 +71,15 @@ export default function Home() {
   }, []);
 
   const filteredEvents = events.filter(event => {
-    const dateMatch = event.date === selectedDate;
+    const dateMatch = true; // ← Temporarily disable date filtering
     const matchesFilters = Object.entries(filters).every(
-      ([key, value]) => !value || (event[key] && event[key].toLowerCase().includes(value.toLowerCase()))
+      ([key, value]) =>
+        !value || (event[key] && event[key].toLowerCase().includes(value.toLowerCase()))
     );
     return dateMatch && matchesFilters;
   });
 
-  const generateGoogleMapsLink = (venue: string) => {
+  const generateGoogleMapsLink = (venue) => {
     const query = encodeURIComponent(`${venue}, Madison WI`);
     return `https://www.google.com/maps/search/?api=1&query=${query}`;
   };
@@ -90,14 +91,19 @@ export default function Home() {
       <div style={{ marginBottom: "20px" }}>
         <Calendar
           onChange={(date) => {
-            const iso = new Date(date as Date).toISOString().slice(0, 10);
+            const iso = new Date(date).toISOString().slice(0, 10);
             setSelectedDate(iso);
           }}
           value={new Date(selectedDate)}
         />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "10px", marginBottom: "20px" }}>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+        gap: "10px",
+        marginBottom: "20px"
+      }}>
         <input placeholder="Event Type" onChange={(e) => setFilters({ ...filters, type: e.target.value })} />
         <input placeholder="Venue Type" onChange={(e) => setFilters({ ...filters, venue: e.target.value })} />
         <input placeholder="Genre" onChange={(e) => setFilters({ ...filters, genre: e.target.value })} />
@@ -107,7 +113,11 @@ export default function Home() {
 
       <p><strong>Debug:</strong> {events.length} total events loaded. Selected date: {selectedDate}</p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" }}>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gap: "20px"
+      }}>
         {filteredEvents.length > 0 ? filteredEvents.map(event => (
           <div key={event.id} style={{ border: "1px solid #ccc", padding: "15px", borderRadius: "8px" }}>
             <h2 style={{ fontSize: "18px", fontWeight: "600" }}>
